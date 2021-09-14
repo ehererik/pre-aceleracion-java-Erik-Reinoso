@@ -2,9 +2,8 @@ package com.dis.disney.dto;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
-import com.dis.disney.model.Personaje;
+import com.dis.disney.dto.interfaces.IGeneroNomDTO;
+import com.dis.disney.dto.interfaces.IPersonajeDTO;
 
 public class PeliSeriePersonajesDTO {
 

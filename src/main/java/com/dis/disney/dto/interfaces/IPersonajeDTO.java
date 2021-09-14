@@ -1,8 +1,6 @@
-package com.dis.disney.dto;
+package com.dis.disney.dto.interfaces;
 
-import java.util.Set;
 
-import com.dis.disney.model.PeliculaSerie;
 
 public interface IPersonajeDTO {
 	public String getNombre();

@@ -7,21 +7,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.dis.disney.builder.PeliculaSerieBuilder;
 import com.dis.disney.builder.PeliculaSeriePersonajeBuilder;
-import com.dis.disney.builder.PersonajeDTOBuilder;
-import com.dis.disney.dto.GeneroDTO;
-import com.dis.disney.dto.IPeliculaSerieDTO;
-import com.dis.disney.dto.IPersonajeDTO;
 import com.dis.disney.dto.PeliSeriePersonajesDTO;
 import com.dis.disney.dto.PeliculaSerieDTO;
-import com.dis.disney.dto.PeliculaSerieImgTitFecDTO;
-import com.dis.disney.dto.PersonajeDTO;
+import com.dis.disney.dto.interfaces.IPeliculaSerieDTO;
+import com.dis.disney.dto.interfaces.IPersonajeDTO;
 import com.dis.disney.model.Genero;
 import com.dis.disney.model.PeliculaSerie;
 import com.dis.disney.repository.GeneroRepository;
@@ -38,31 +31,17 @@ public class PeliculaSerieServiceImpl implements IPeliculaSerieService {
 	@Autowired
 	private PersonajeRepository personajeRespository;
 	
-	//@Override
-	/*public List<IPeliculaSerieImgTitFecDTO> listImgTitFech() {
-		return peliculaSerieRepository.listImgTitFech();
-	}*/
-
-	public List<PeliculaSerieImgTitFecDTO> listar(){
-		List<PeliculaSerie> l= peliculaSerieRepository.findAll();
-		List<PeliculaSerieImgTitFecDTO> lITF = new ArrayList<PeliculaSerieImgTitFecDTO>();
-		Iterator<PeliculaSerie> it= l.iterator();
-		PeliculaSerieBuilder bu =new  PeliculaSerieBuilder();
-		while(it.hasNext()) {
-			bu.withPeliculaSerie(it.next());
-			lITF.add(bu.buildPSITFDTO());
-		}
-		return lITF;
-	}
+	
 	@Override
 	public PeliculaSerie SavePeliculaSerie(PeliculaSerieDTO p) {
 		PeliculaSerie peli = new PeliculaSerieBuilder().withPeliculaSerieDTO(p).buildPS();
 		peli.setLikedGenero( new HashSet<Genero>());
-		
-		Iterator<Long> it =p.getLikedGenero().iterator();
-		while(it.hasNext()) {
-			long indice=it.next();
-			peli.getLikedGenero().add(generoRepository.findById(indice).get());
+		if(p.getLikedGenero()!=null) {
+			Iterator<Long> it =p.getLikedGenero().iterator();
+			while(it.hasNext()) {
+				long indice=it.next();
+				peli.getLikedGenero().add(generoRepository.findById(indice).get());
+			}
 		}
 		return peliculaSerieRepository.save(peli);
 	}
@@ -80,20 +59,21 @@ public class PeliculaSerieServiceImpl implements IPeliculaSerieService {
 		return  psp;
 	}
 	
-	public List<IPeliculaSerieDTO> PeliPorGenero(Optional<String> genre, Optional<String> titulo , Optional<String> order){
+	public List<IPeliculaSerieDTO> getRequest(Optional<String> genre, Optional<String> title , Optional<String> order){
 			if(genre.isPresent())
 				return peliculaSerieRepository.peliPorGenero(Long.parseLong(Objects.requireNonNull(genre.get())));
-			else if(titulo.isPresent())
-				return peliculaSerieRepository.peliPorTitulo(titulo.get());
-			else 
+			else if(title.isPresent())
+				return peliculaSerieRepository.peliPorTitulo(title.get());
+			else if(order.isPresent()) {
+				if(order.get().equals("ASC")) 
+					return peliculaSerieRepository.listImgTitFechAsc();
+				else
+					return peliculaSerieRepository.listImgTitFechDesc();
+			}
+			else
 				return peliculaSerieRepository.listImgTitFech();
 	}
 
-	@Override
-	public List<PeliculaSerie> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	@Override
 	public PeliculaSerie update(PeliculaSerieDTO peliculaSerieDTO, long id) {
 		PeliculaSerie peli= new PeliculaSerie();
@@ -105,7 +85,6 @@ public class PeliculaSerieServiceImpl implements IPeliculaSerieService {
 			try {
 				peli.setFechaCreacion(formato.parse(peliculaSerieDTO.getFecha()));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -126,6 +105,7 @@ public class PeliculaSerieServiceImpl implements IPeliculaSerieService {
 	}
 		return peliculaSerieRepository.save(peli);
   }
+	
 	public void delete(long id) {
 		peliculaSerieRepository.deleteById(id);
 	}

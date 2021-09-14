@@ -1,10 +1,9 @@
-package com.dis.disney.dto;
+package com.dis.disney.dto.interfaces;
 
 import java.util.Date;
 
-public interface IPeliculaSerieDTO {
+public interface IPeliculaSerieImgTitFecDTO {
 	public String getImagen();
 	public Date getFecha_creacion() ;
 	public String getTitulo();
-	public int getCalificacion();
 }

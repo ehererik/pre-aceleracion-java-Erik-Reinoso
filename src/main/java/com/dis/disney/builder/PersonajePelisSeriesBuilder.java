@@ -1,9 +1,9 @@
 package com.dis.disney.builder;
 import java.util.List;
-import com.dis.disney.dto.IPeliculaSerieDTO;
-import com.dis.disney.dto.IPeliculaSerieTit;
-import com.dis.disney.dto.IPersonajeDTO;
+
 import com.dis.disney.dto.PersonajePelisSeriesDTO;
+import com.dis.disney.dto.interfaces.IPeliculaSerieTit;
+import com.dis.disney.dto.interfaces.IPersonajeDTO;
 public class PersonajePelisSeriesBuilder {
 
 	private String nombre;

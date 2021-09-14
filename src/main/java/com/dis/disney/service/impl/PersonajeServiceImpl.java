@@ -1,32 +1,21 @@
 package com.dis.disney.service.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-
-import com.dis.disney.builder.PeliculaSeriePersonajeBuilder;
 import com.dis.disney.builder.PersonajeBuilder;
 import com.dis.disney.builder.PersonajePelisSeriesBuilder;
-import com.dis.disney.builder.PersonanjeImgNomDTOBuilder;
-import com.dis.disney.dto.IPeliculaSerieDTO;
-import com.dis.disney.dto.IPeliculaSerieTit;
-import com.dis.disney.dto.IPersonajeDTO;
-import com.dis.disney.dto.IPesonajeNomImgDTO;
-import com.dis.disney.dto.PeliSeriePersonajesDTO;
-import com.dis.disney.dto.PeliculaSerieDTO;
 import com.dis.disney.dto.PersonajeDTO;
 import com.dis.disney.dto.PersonajePelisSeriesDTO;
-import com.dis.disney.dto.PersonanjeImgNomDTO;
+import com.dis.disney.dto.interfaces.IPeliculaSerieTit;
+import com.dis.disney.dto.interfaces.IPersonajeDTO;
+import com.dis.disney.dto.interfaces.IPesonajeNomImgDTO;
 import com.dis.disney.model.PeliculaSerie;
 import com.dis.disney.model.Personaje;
 import com.dis.disney.repository.PeliculaSerieRepository;
@@ -41,31 +30,12 @@ public class PersonajeServiceImpl implements IPersonajeService {
 	private PeliculaSerieRepository peliculaRepository;
 	
 	@Override
-
-	public List<IPesonajeNomImgDTO> findAll() {
-		return personajeRepository.listAll();
-	}
-/*	@Override
-	public List<PersonanjeImgNomDTO> getList(){
-		List<Personaje> l= personajeRepository.findAll();
-		List<PersonanjeImgNomDTO> lDTO = new ArrayList<PersonanjeImgNomDTO>();
-		Personaje p;
-		Iterator<Personaje> it1 = l.iterator();
-		PersonanjeImgNomDTOBuilder b=new PersonanjeImgNomDTOBuilder();
-		while(it1.hasNext()) {
-		p=it1.next();
-		b.withPersonaje(p);
-		lDTO.add(b.build());
-		}
-		return lDTO;
-	}
-*/
-	@Override
 	public Personaje savePersonaje(PersonajeDTO per) {
 		PersonajeBuilder b= new PersonajeBuilder();
 		b=b.withPersonajeDTO(per);
 		Personaje personaje = b.build();
 		personaje.setLikedPeliculaSerie(new HashSet<PeliculaSerie>());
+		
 		Iterator<Long> it = per.getLikedPeliculaSerie().iterator();
 		while(it.hasNext()) {
 			personaje.getLikedPeliculaSerie().add(peliculaRepository.findById(it.next()).get());
@@ -95,6 +65,7 @@ public class PersonajeServiceImpl implements IPersonajeService {
 		PersonajePelisSeriesDTO psp=bu2.PersonajePelisSeriesBuild();
 		return  psp;
 	}
+	
 	public Personaje update(PersonajeDTO personajeDTO, long id) {
 		Personaje per= new Personaje();
 		per=personajeRepository.findById(id).get();
@@ -110,14 +81,16 @@ public class PersonajeServiceImpl implements IPersonajeService {
 			per.setImagen(personajeDTO.getImagen());
 		if(personajeDTO.getLikedPeliculaSerie()!=null && !personajeDTO.getLikedPeliculaSerie().isEmpty()) {
 			 Iterator <Long> it = personajeDTO.getLikedPeliculaSerie().iterator();
+			 per.setLikedPeliculaSerie(new HashSet<PeliculaSerie>());
 			 while(it.hasNext()) {
 				 per.getLikedPeliculaSerie().add(peliculaRepository.findById(it.next()).get());
 			 }
 		}
-		return per;
+		return personajeRepository.save(per);
 	}
 	@Override
 	public void delete(long id) {
 		personajeRepository.deleteById(id);
 	}
+
 }

@@ -1,8 +1,5 @@
 package com.dis.disney.dto;
-
-import java.util.Date;
 import java.util.Set;
-
 
 public class PeliculaSerieDTO {
 	private int califiacion=0;

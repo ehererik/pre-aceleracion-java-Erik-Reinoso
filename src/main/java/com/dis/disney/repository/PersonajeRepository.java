@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.dis.disney.dto.IPersonajeDTO;
-import com.dis.disney.dto.IPesonajeNomImgDTO;
+import com.dis.disney.dto.interfaces.IPersonajeDTO;
+import com.dis.disney.dto.interfaces.IPesonajeNomImgDTO;
 import com.dis.disney.model.Personaje;
 
 @Repository

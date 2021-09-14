@@ -1,4 +1,4 @@
-package com.dis.pre;
+package com.dis.disney;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -2,6 +2,8 @@ package com.dis.disney.dto;
 
 import java.util.List;
 
+import com.dis.disney.dto.interfaces.IPeliculaSerieTit;
+
 public class PersonajePelisSeriesDTO {
 	
 	private String nombre;

@@ -1,4 +1,4 @@
-package com.dis.disney.dto;
+package com.dis.disney.dto.interfaces;
 
 import java.util.Date;
 import java.util.List;

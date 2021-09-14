@@ -1,6 +1,6 @@
 package com.dis.disney.builder;
-import com.dis.disney.dto.IPersonajeDTO;
 import com.dis.disney.dto.PersonajeDTO;
+
 import com.dis.disney.model.Personaje;
 
 public class PersonajeBuilder {

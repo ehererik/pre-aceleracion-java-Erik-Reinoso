@@ -1,17 +1,11 @@
 package com.dis.disney.builder;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import com.dis.disney.dto.IPeliculaSerieDTO;
-import com.dis.disney.dto.IPersonajeDTO;
 import com.dis.disney.dto.PeliSeriePersonajesDTO;
-import com.dis.disney.dto.PeliculaSerieDTO;
-import com.dis.disney.dto.PersonajeDTO;
-import com.dis.disney.model.PeliculaSerie;
-import com.dis.disney.model.Personaje;
+import com.dis.disney.dto.interfaces.IPeliculaSerieDTO;
+import com.dis.disney.dto.interfaces.IPersonajeDTO;
 
 public class PeliculaSeriePersonajeBuilder {
 	private String imagen;

@@ -1,6 +1,5 @@
 package com.dis.disney.controller;
 
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dis.disney.dto.PeliculaSerieDTO;
@@ -38,8 +36,8 @@ public class PeliculaSerieController  {
 		return new ResponseEntity<>(peliculaSerieService.details(id),HttpStatus.OK);
 	}
 	@GetMapping
-	public ResponseEntity<?> getMovie( @RequestParam Optional<String> genre,  @RequestParam Optional<String> titulo ,  @RequestParam Optional<String> order ){
-		return new ResponseEntity<>(peliculaSerieService.PeliPorGenero(genre, titulo ,order),HttpStatus.OK);
+	public ResponseEntity<?> getMovie( @RequestParam Optional<String> genre,  @RequestParam Optional<String> title ,  @RequestParam Optional<String> order ){
+		return new ResponseEntity<>(peliculaSerieService.getRequest(genre, title ,order),HttpStatus.OK);
 	}
 	
 	@PutMapping ("/{id}")

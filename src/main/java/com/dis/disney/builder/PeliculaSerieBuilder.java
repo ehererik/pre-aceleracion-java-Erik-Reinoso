@@ -2,11 +2,8 @@ package com.dis.disney.builder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.dis.disney.dto.PeliculaSerieDTO;
-import com.dis.disney.dto.PeliculaSerieImgTitFecDTO;
 import com.dis.disney.model.PeliculaSerie;
-
 public  class PeliculaSerieBuilder {
 	private long id;
 	private String imagen;
@@ -28,12 +25,13 @@ public  class PeliculaSerieBuilder {
 		this.imagen=p.getImagen();
 		this.calificacion=p.getCalificacion();
 		this.titulo=p.getTitulo();
-		//this.fechaD=p.getFecha();
-		try {
-			this.fechaD=formato.parse(p.getFecha());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(p.getFecha()!=null) {
+			try {
+				this.fechaD=formato.parse(p.getFecha());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return this;
 	}
@@ -56,12 +54,5 @@ public  class PeliculaSerieBuilder {
 		return p;
 	}
 	
-	public PeliculaSerieImgTitFecDTO buildPSITFDTO() {
-		PeliculaSerieImgTitFecDTO p =new PeliculaSerieImgTitFecDTO();
-		p.setFecha(fechaD);
-		p.setImagen(imagen);
-		p.setTitulo(titulo);
-		return p;
-	}
 	
 }
