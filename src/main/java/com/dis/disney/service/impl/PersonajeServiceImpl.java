@@ -35,10 +35,11 @@ public class PersonajeServiceImpl implements IPersonajeService {
 		b=b.withPersonajeDTO(per);
 		Personaje personaje = b.build();
 		personaje.setLikedPeliculaSerie(new HashSet<PeliculaSerie>());
-		
-		Iterator<Long> it = per.getLikedPeliculaSerie().iterator();
-		while(it.hasNext()) {
-			personaje.getLikedPeliculaSerie().add(peliculaRepository.findById(it.next()).get());
+		if(per.getLikedPeliculaSerie()!=null) {
+			Iterator<Long> it = per.getLikedPeliculaSerie().iterator();
+			while(it.hasNext()) {
+				personaje.getLikedPeliculaSerie().add(peliculaRepository.findById(it.next()).get());
+			}
 		}
 		return personajeRepository.save(personaje);
 	}
